@@ -10,7 +10,7 @@ if(NOT OpenCL_FOUND AND DOWNLOAD_MISSING_DEPS)
   include(ExternalProject)
   ExternalProject_Add(opencl_headers
     GIT_REPOSITORY    https://github.com/KhronosGroup/OpenCL-Headers
-    GIT_TAG           master
+    GIT_TAG           v2020.12.18
     CONFIGURE_COMMAND ""
     BUILD_COMMAND     ""
     INSTALL_COMMAND   ""
@@ -24,14 +24,14 @@ if(NOT OpenCL_FOUND AND DOWNLOAD_MISSING_DEPS)
 
   ExternalProject_Add(opencl_icd_loader
     GIT_REPOSITORY  https://github.com/KhronosGroup/OpenCL-ICD-Loader
-    GIT_TAG         master
+    GIT_TAG         v2020.12.18
     DEPENDS         opencl_headers
     CMAKE_ARGS      -DOPENCL_ICD_LOADER_HEADERS_DIR=${OpenCL_INCLUDE_DIR}
                     -DBUILD_TESTING=OFF
     INSTALL_COMMAND ""
   )
   ExternalProject_Get_Property(opencl_icd_loader BINARY_DIR)
-  set(OpenCL_LIBRARY ${BINARY_DIR}/libOpenCL.so
+  set(OpenCL_LIBRARY ${BINARY_DIR}/libOpenCL${CMAKE_SHARED_LIBRARY_SUFFIX}
     CACHE PATH "OpenCL library location" FORCE
   )
   message(STATUS "library: ${OpenCL_LIBRARY}")
